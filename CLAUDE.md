@@ -2,12 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Important: Documentation Reference
+
+**ALWAYS** refer to the relevant documentation files in the `/docs` directory before generating any code. These docs contain project-specific patterns, guidelines, and implementation details that must be followed.
+
 ## Commands
 
 - **Development**: `npm run dev` - Start the development server at http://localhost:3000
 - **Build**: `npm run build` - Create a production build
 - **Lint**: `npm run lint` - Run ESLint
 - **Production**: `npm run start` - Run the production server (after build)
+
+- /docs/ui.md
 
 ## Architecture
 

@@ -1,3 +1,7 @@
 import { drizzle } from 'drizzle-orm/neon-http';
-const db = drizzle(process.env.DATABASE_URL!);
+import { neon } from '@neondatabase/serverless';
+
+const client = neon(process.env.DATABASE_URL!);
+const db = drizzle(client);
+
 export { db };
