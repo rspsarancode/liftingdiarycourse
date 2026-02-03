@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run lint)",
+      "Bash(npx drizzle-kit:*)",
+      "Bash(claude mcp remove:*)",
+      "mcp__neon__list_projects",
+      "mcp__neon__get_database_tables",
+      "mcp__neon__describe_table_schema",
+      "mcp__neon__run_sql_transaction",
+      "mcp__neon__run_sql"
+    ]
+  },
+  "mcpServers": {
+    "neon": {
+      "command": "http",
+      "url": "https://mcp.neon.tech/mcp",
+      "headers": {
+        "Authorization": "Bearer napi_xq6hlgmsjayctf4sn8cz2plnu8w9378j64f1c88sfdgv38tjhqsun49megc6dsy5"
+      }
+    }
+  }
+}
