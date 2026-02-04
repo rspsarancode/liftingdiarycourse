@@ -1,9 +1,7 @@
-"use client";
-
-import { useState } from "react";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { Dumbbell } from "lucide-react";
-import { DatePicker } from "@/components/date-picker";
+import { DatePickerNav } from "@/components/date-picker-nav";
+import { getWorkoutsByDate } from "@/data/workouts";
 import {
   Card,
   CardContent,
@@ -12,46 +10,33 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-// Mock workout data for UI demonstration
-const mockWorkouts = [
-  {
-    id: "1",
-    name: "Push Day",
-    startedAt: new Date(),
-    exercises: [
-      { name: "Bench Press", sets: 4, reps: 8 },
-      { name: "Overhead Press", sets: 3, reps: 10 },
-      { name: "Tricep Pushdown", sets: 3, reps: 12 },
-    ],
-  },
-  {
-    id: "2",
-    name: "Morning Cardio",
-    startedAt: new Date(),
-    exercises: [{ name: "Treadmill", sets: 1, reps: 30 }],
-  },
-];
+interface DashboardPageProps {
+  searchParams: Promise<{ date?: string }>;
+}
 
-export default function DashboardPage() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+export default async function DashboardPage({
+  searchParams,
+}: DashboardPageProps) {
+  const params = await searchParams;
+  const selectedDate = params.date
+    ? parse(params.date, "yyyy-MM-dd", new Date())
+    : new Date();
+
+  const workouts = await getWorkoutsByDate(selectedDate);
 
   return (
     <div className="container mx-auto max-w-2xl px-4 py-8">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-3xl font-bold">Workouts</h1>
-        <DatePicker date={selectedDate} onDateChange={setSelectedDate} />
+        <DatePickerNav selectedDate={selectedDate} />
       </div>
 
-      {selectedDate && (
-        <p className="text-muted-foreground mb-6">
-          Showing workouts for {format(selectedDate, "do MMM yyyy")}
-        </p>
-      )}
+      <p className="text-muted-foreground mb-6">
+        Showing workouts for {format(selectedDate, "do MMM yyyy")}
+      </p>
 
       <div className="flex flex-col gap-4">
-        {mockWorkouts.length === 0 ? (
+        {workouts.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Dumbbell className="text-muted-foreground mb-4 h-12 w-12" />
@@ -61,7 +46,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         ) : (
-          mockWorkouts.map((workout) => (
+          workouts.map((workout) => (
             <Card key={workout.id}>
               <CardHeader>
                 <CardTitle>{workout.name}</CardTitle>
@@ -73,9 +58,9 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                  {workout.exercises.map((exercise, index) => (
+                  {workout.exercises.map((exercise) => (
                     <li
-                      key={index}
+                      key={exercise.id}
                       className="text-muted-foreground flex items-center justify-between text-sm"
                     >
                       <span>{exercise.name}</span>

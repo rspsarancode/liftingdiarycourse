@@ -13,7 +13,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Lint**: `npm run lint` - Run ESLint
 - **Production**: `npm run start` - Run the production server (after build)
 
-- /docs/ui.md
+## Documentation
+
+- `/docs/ui.md` - UI component standards (shadcn/ui, date formatting)
+- `/docs/data-fetching.md` - Data fetching patterns (Server Components, Drizzle ORM, user isolation)
 
 ## Architecture
 
@@ -30,4 +33,6 @@ This is a Next.js 16 project using the App Router pattern with TypeScript and Ta
   - `layout.tsx` - Root layout with Geist font configuration
   - `page.tsx` - Home page
   - `globals.css` - Global styles and Tailwind imports
+- `data/` - Database query helper functions (Drizzle ORM)
+- `db/` - Database connection and schema
 - `@/*` path alias maps to the project root
